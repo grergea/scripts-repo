@@ -5,7 +5,7 @@
 ## 저장소 정보
 
 - **이름**: scripts
-- **GitHub**: https://github.com/grergea/scripts (**공개 저장소** — 민감정보 절대 금지)
+- **GitHub**: https://github.com/grergea/scripts-repo (**공개 저장소** — 민감정보 절대 금지)
 - **브랜치**: master (`git push origin master`)
 - **용도**: 유용한 셸 스크립트 모음
 - **소유자**: 이상훈

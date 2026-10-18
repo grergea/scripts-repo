@@ -18,8 +18,8 @@
 
 ```bash
 # 저장소 클론
-git clone https://github.com/grergea/scripts.git
-cd scripts
+git clone https://github.com/grergea/scripts-repo.git
+cd scripts-repo
 
 # 스크립트 실행
 ./gdig/gdig.sh a example.com

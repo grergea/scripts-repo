@@ -68,7 +68,7 @@ python cache_consistency.py \
 
 ```bash
 # ~/.zshrc 또는 ~/.bashrc에 추가
-alias cache-check='source ~/python_venv/cache-consistency/bin/activate && python ~/scripts/cache-consistency/cache_consistency.py'
+alias cache-check='source ~/python_venv/cache-consistency/bin/activate && python ~/scripts-repo/cache-consistency/cache_consistency.py'
 
 # 사용 예시
 cache-check --bucket my-bucket --endpoint https://s3-region.wcsapi.com ...

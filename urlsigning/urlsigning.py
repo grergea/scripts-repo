@@ -220,7 +220,7 @@ Examples:
   URLSigning.py -u https://cdn.example.com/video.mp4 -m UTV -k mysecretkey --sign-order kpt -v
   URLSigning.py -u https://cdn.example.com/video.mp4 -m C -k mysecretkey --time-offset 0
 
-Full docs: https://github.com/grergea/scripts/tree/master/urlsigning
+Full docs: https://github.com/grergea/scripts-repo/tree/master/urlsigning
 """
 
 

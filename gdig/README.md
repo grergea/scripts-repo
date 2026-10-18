@@ -30,8 +30,8 @@ sudo apt install curl jq dnsutils zsh
 
 ```bash
 # 저장소 클론
-git clone https://github.com/grergea/scripts.git
-cd scripts/gdig
+git clone https://github.com/grergea/scripts-repo.git
+cd scripts-repo/gdig
 
 # 실행 권한 부여
 chmod +x gdig.sh
