@@ -4,10 +4,10 @@
 
 ## 저장소 정보
 
-- **이름**: scripts
+- **이름**: scripts-repo
 - **GitHub**: https://github.com/grergea/scripts-repo (**공개 저장소** — 민감정보 절대 금지)
 - **브랜치**: master (`git push origin master`)
-- **용도**: 유용한 셸 스크립트 모음
+- **용도**: CDN/DNS/네트워크 업무용 셸·Python 스크립트 모음
 - **소유자**: 이상훈
 
 ## 저장소 구조
@@ -27,6 +27,7 @@ scripts-repo/
 │   └── urlsigning.py
 │
 ├── pcontents/             # CDN 노드 콘텐츠 일관성 검증
+│   ├── README.md
 │   └── pcontents.sh
 │
 ├── cache-consistency/     # S3↔CDN 캐시 정합성 검증
@@ -38,9 +39,13 @@ scripts-repo/
 │   ├── README.md
 │   └── sslyze-map.sh
 │
-└── ssl-pfx2pem/           # PFX → PEM 인증서/개인키/체인 분리
+├── ssl-pfx2pem/           # PFX → PEM 인증서/개인키/체인 분리
+│   ├── README.md
+│   └── ssl_pfx2pem.sh
+│
+└── globalping/            # Globalping API 국가별 ping 측정
     ├── README.md
-    └── ssl_pfx2pem.sh
+    └── globalping_ping.py
 ```
 
 > **Obsidian 볼트 관리 스크립트**: `scripts-skills` 레포 관리 (https://github.com/grergea/scripts-skills)
@@ -60,40 +65,44 @@ scripts-repo/
 ## 실행 예시 (Quick Reference)
 
 ```bash
-# gdig: DNS 조회
-bash gdig/gdig.sh example.com A
+# gdig: DNS 조회 (zsh 전용 문법을 쓰므로 zsh로 실행)
+./gdig/gdig.sh a example.com kr
 
 # urlsigning: CDN URL 서명 생성
-python urlsigning/urlsigning.py --key KEY --url URL
+python urlsigning/urlsigning.py -m A -r cdn.example.com -p /video.mp4 -k KEY
 
 # pcontents: CDN 노드 콘텐츠 정합성 검증
-bash pcontents/pcontents.sh
+bash pcontents/pcontents.sh -o https://www.example.com/image.jpg
 
 # cache-consistency: S3↔CDN 캐시 정합성 검증 (AWS credentials 필요)
 pip install -r cache-consistency/requirements.txt
-python cache-consistency/cache_consistency.py
+python cache-consistency/cache_consistency.py --origin ORIGIN_URL --cdn CDN_URL --bucket BUCKET
 
 # sslyze-map: TLS 버전별 cipher를 OpenSSL 표기로 출력
 bash sslyze-map/sslyze-map.sh --mapping openssl --tlsv1_2 --tlsv1_3 example.com
 
 # ssl-pfx2pem: PFX를 PEM 인증서/개인키/체인으로 분리 (bash/zsh 모두 가능)
 bash ssl-pfx2pem/ssl_pfx2pem.sh example.com.pfx
+
+# globalping: 특정 국가 프로브에서 ping 측정
+python globalping/globalping_ping.py example.com --country KR
 ```
 
 ## 연관 Obsidian 노트
 
-- 스크립트 문서: `/Users/shlee/mynotes/03_Resources/Scripts/`
-- 스크립트 인덱스: `🏷 Scripts.md`
+- 스크립트 문서: `/Users/shlee/mynotes/03_Resources/Scripts/<카테고리>/` (CDN, Network 등)
+- 스크립트 인덱스: `/Users/shlee/mynotes/03_Resources/Index/🏷 Scripts.md`
 
 ## 작업 규칙
 
 ### 새 스크립트 추가 시
 1. 스크립트 폴더 생성 (`스크립트명/`)
-2. 스크립트 파일 작성 (`스크립트명.sh`)
+2. 스크립트 파일 작성 (`스크립트명.sh` 또는 `.py`)
 3. 폴더 내 README.md 작성 (상세 문서)
 4. 메인 README.md 테이블에 추가
-5. Obsidian 노트 문서화 (`스크립트명.md`)
-6. 커밋 & 푸시
+5. 이 파일의 저장소 구조, 스크립트 목록, 실행 예시에 추가
+6. Obsidian 노트 문서화 (`03_Resources/Scripts/<카테고리>/스크립트명.md`)
+7. 커밋 & 푸시
 
 ### 커밋 메시지 형식
 
@@ -103,5 +112,5 @@ Footer 필수:
 ```
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+Co-Authored-By: Claude Code <noreply@anthropic.com>
 ```
