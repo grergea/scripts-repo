@@ -38,11 +38,9 @@ scripts-repo/
 │   ├── README.md
 │   └── sslyze-map.sh
 │
-├── ssl-pfx2pem/           # PFX → PEM 인증서/개인키/체인 분리
-│   ├── README.md
-│   └── ssl_pfx2pem.sh
-│
-└── vault-management/      # Obsidian 볼트 관리 유틸리티
+└── ssl-pfx2pem/           # PFX → PEM 인증서/개인키/체인 분리
+    ├── README.md
+    └── ssl_pfx2pem.sh
 ```
 
 > **Obsidian 볼트 관리 스크립트**: `scripts-skills` 레포 관리 (https://github.com/grergea/scripts-skills)
