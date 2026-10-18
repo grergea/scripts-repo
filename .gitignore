@@ -1,6 +1,3 @@
-# 로컬 전용 (민감 데이터 포함)
-bluer-collector/
-
 # 로그 파일
 *.log
 

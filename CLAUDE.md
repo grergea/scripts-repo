@@ -45,7 +45,6 @@ scripts-repo/
 └── vault-management/      # Obsidian 볼트 관리 유틸리티
 ```
 
-> **로컬 전용 (미추적)**: `bluer-collector/` — 민감 데이터 포함, `.gitignore` 처리
 > **Obsidian 볼트 관리 스크립트**: `scripts-skills` 레포 관리 (https://github.com/grergea/scripts-skills)
 
 ## 스크립트 목록
