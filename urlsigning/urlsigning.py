@@ -106,6 +106,9 @@ def apply_time_offset(time_str, offset, hex_time):
     return str(int(time_str) + offset)
 
 
+MODE_E_ERROR = "Mode E supports only MD5 and decimal Unix time (do not use --hash sha256 or --hex-time)."
+
+
 def generate_signed_url(
     mode,
     scheme,
@@ -180,6 +183,8 @@ def generate_signed_url(
         params = urlencode({"time": adjusted_time, "key": signed_key})
         return f"{scheme}://{host}{path}?{params}"
     elif mode == "E":
+        if hash_type.lower() != "md5" or hex_time:
+            raise ValueError(MODE_E_ERROR)
         rand = "".join(
             random.choices("0123456789", k=9)
         )  # Generate a random 9-digit string
@@ -212,7 +217,7 @@ Modes:
   B    /{hash}/{time}{path}
   C    {path}?key={hash}&time={time}                 (time offset applied)
   D    {path}?time={time}&key={hash}                 (time offset applied)
-  E    {path}?auth_key={time}-{rand}-{uid}-{hash}     (fixed format)
+  E    {path}?auth_key={time}-{rand}-{uid}-{hash}     (fixed format, MD5 and decimal time only)
   UTV  {path}?px-time={time}&px-hash={hash}           (time offset applied, param names configurable)
 
 Examples:
@@ -277,14 +282,14 @@ def main():
     time_group.add_argument(
         "--hex-time",
         action="store_true",
-        help="convert start_time to hexadecimal format",
+        help="convert start_time to hexadecimal format (not supported in mode E)",
     )
     time_group.add_argument(
         "--hash",
         choices=["md5", "sha256"],
         metavar="ALGO",
         default="md5",
-        help="md5 or sha256 (default: md5)",
+        help="md5 or sha256 (default: md5; mode E supports md5 only)",
     )
     time_group.add_argument(
         "--sign-order",
@@ -355,6 +360,9 @@ def main():
         parser.error(
             "--sign-order must contain exactly 'k', 'p', 't' each once (e.g., pkt, kpt, ktp)"
         )
+
+    if args.mode == "E" and (args.hash.lower() != "md5" or args.hex_time):
+        parser.error(MODE_E_ERROR)
 
     signed_url = generate_signed_url(
         args.mode,

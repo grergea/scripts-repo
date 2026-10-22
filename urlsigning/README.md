@@ -48,8 +48,8 @@ python urlsigning.py -m <mode> -r <host> -p <path> -k <key> [options]
 |--------|---------|-------------|
 | `-s, --scheme` | `http` | URL 스킴 (http/https) |
 | `-t, --start_time` | 현재시간 | Unix 타임스탬프 |
-| `--hex-time` | - | 시간을 16진수로 변환 |
-| `--hash` | `md5` | 해시 알고리즘 (md5/sha256) |
+| `--hex-time` | - | 시간을 16진수로 변환 (Mode E 불가) |
+| `--hash` | `md5` | 해시 알고리즘 (md5/sha256, Mode E는 md5만 가능) |
 | `--uid` | - | 커스텀 UID (Mode E) |
 | `--uid-type` | `mac` | UID 생성 방식 (mac/random/zero/hostname) |
 | `--sign-order` | `pkt` | Mode A/B/C/D/UTV의 signing string 순서 (k/p/t 조합, 예: kpt) |
@@ -98,8 +98,10 @@ python urlsigning.py -m A -r cdn.example.com -p /video.mp4 -k mysecretkey -v
 | B | `/{hash}/{time}{path}` | `--sign-order` 지정 (기본 `pkt` = `{path}{key}{time}`), offset 미반영 |
 | C | `{path}?key={hash}&time={time}` | `--sign-order` 지정 (기본 `pkt`, 시각은 `--time-offset` 반영된 adjusted time) |
 | D | `{path}?time={time}&key={hash}` | `--sign-order` 지정 (기본 `pkt`, 시각은 `--time-offset` 반영된 adjusted time) |
-| E | `{path}?auth_key={time}-{rand}-{uid}-{hash}` | `{path}-{time}-{rand}-{uid}-{key}` (고정) |
+| E | `{path}?auth_key={time}-{rand}-{uid}-{hash}` | `{path}-{time}-{rand}-{uid}-{key}` (고정, MD5와 10진수 Unix 시간만 가능) |
 | UTV | `{path}?{time_param}={time}&{hash_param}={hash}` | `--sign-order` 지정 (기본 `pkt`, 시각은 `--time-offset` 반영된 adjusted time) |
+
+Mode E는 MD5와 10진수 Unix 시간만 지원합니다. `--hash sha256`이나 `--hex-time`과 함께 쓰면 오류로 종료합니다.
 
 ## UID Types (Mode E)
 
